@@ -4,24 +4,24 @@ Sub test()
     v = Array(0.001234, 0.02011, 0.20113, 9.801, 123.52)
     Debug.Print vbCrLf
     
-    '' •W€•Î·‚ÌŒvZ
+    '' æ¨™æº–åå·®ã®è¨ˆç®—
     sd = WorksheetFunction.StDev(d)
     Debug.Print "SD: " & sd
     
-    '' ’è—Ê‰ºŒÀ’l‚ÌŒvZ
+    '' å®šé‡ä¸‹é™å€¤ã®è¨ˆç®—
     Debug.Print "LLQ: " & LLQ(sd)
     
-    '' ŒŸo‰ºŒÀ’l‚ÌŒvZ
+    '' æ¤œå‡ºä¸‹é™å€¤ã®è¨ˆç®—
     Debug.Print "LLD: " & LLD(sd)
     
-    '' ”’l‚Ü‚é‚ß
-    Debug.Print vbCrLf & "”’lŠÛ‚ß"
+    '' æ•°å€¤ã¾ã‚‹ã‚
+    Debug.Print vbCrLf & "æ•°å€¤ä¸¸ã‚"
     For Each num In v
         Debug.Print num & " = " & roundSet(num, LLQ(sd), 2)
     Next
 
-    '' ‰ºŒÀ’lˆÈ‰º‚Ì•\‹L‚àİ’è
-    Debug.Print vbCrLf & "•\‹L•ÏX"
+    '' ä¸‹é™å€¤ä»¥ä¸‹ã®è¡¨è¨˜ã‚‚è¨­å®š
+    Debug.Print vbCrLf & "è¡¨è¨˜å¤‰æ›´"
     For Each num In v
         Debug.Print num & " = " & roundSetStyle(num, sd, 2)
     Next
@@ -53,9 +53,11 @@ Function roundJIS(ByVal x As Double, Optional digits As Long = 3)
 End Function
 Function LLD(ByVal sd As Double, Optional ByVal digits As Long = 2)
     Dim lq As Double
+    Dim dig As Double
     
     lq = LLQ(sd, digits)
-    LLD = floor2(sd * 3, lq, digits)
+    dig = -(getDigits(lq) - (digits - 1))
+    LLD = WorksheetFunction.Round(sd * 3, dig)
 End Function
 Function LLQ(ByVal sd As Double, Optional ByVal digits As Long = 2)
     LLQ = round2(sd * 10, digits)
